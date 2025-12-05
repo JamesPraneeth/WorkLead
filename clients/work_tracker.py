@@ -150,5 +150,5 @@ class WorkTrackerClient:
         # Parse "Lead ID: <id>" pattern from description
         if not desc:
             return None
-        match = re.search(r"Lead ID:\s*(\d+)", desc)
+        match = re.search(r"Lead ID:\s*([a-zA-Z0-9_-]+)", desc)
         return match.group(1) if match else None
