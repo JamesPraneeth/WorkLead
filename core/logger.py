@@ -4,12 +4,7 @@ import sys
 import io
 from datetime import datetime
 
-# Fix Windows console encoding for Unicode
-if sys.platform.startswith('win'):
-    sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8', errors='replace')
-    sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding='utf-8', errors='replace')
-
-def setup_logger(name: str = "work_lead_sync"):
+def setup_logger(name):
     #Configure logging with file and console handlers
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)

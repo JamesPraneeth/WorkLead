@@ -117,3 +117,19 @@ class LeadTrackerClient:
         except Exception as e:
             logger.error(f"Error updating lead {lead_id}: {str(e)}")
             raise
+    def delete_lead(self, lead_id: str) -> bool:
+    #Delete the row for a given lead_id from the sheet.
+        try:
+            records = self.get_all_leads()
+            for idx, record in enumerate(records):
+                if str(record.get("id")) == str(lead_id):
+                    row_num = idx + 2  # header is row 1
+                    self.sheet.delete_rows(row_num)
+                    logger.info(f"Deleted lead {lead_id} from Google Sheets")
+                    return True
+            logger.warning(f"Lead {lead_id} not found for deletion")
+            return False
+        except Exception as e:
+            logger.error(f"Error deleting lead {lead_id}: {e}")
+            return False
+

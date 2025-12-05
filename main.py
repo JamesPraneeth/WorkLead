@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from core.logger import setup_logger
 from core.sync_logic import SyncEngine
 
-logger = setup_logger()
+logger = setup_logger(__name__)
 
 def validate_env():
     required_env_vars = [
@@ -93,7 +93,7 @@ def main():
                         else:
                             card_id = lead["trello_card_id"]
                             logger.info(
-                                f"Resolved lead {lead_id} to card {card_id} (task -> lead)"
+                                f"Found lead {lead_id} linked to card {card_id} (task -> lead)"
                             )
                             sync.sync_task_to_lead(card_id)
                     else:
