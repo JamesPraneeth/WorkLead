@@ -281,8 +281,7 @@ Q. Quit
 
 ### Tools Used
 - **ChatGPT (GPT-4)** - Code snippets and documentation research
-- **GitHub Copilot** - Code completion and boilerplate
-
+- **Youtube**
 ---
 
 ### What I Used AI For
