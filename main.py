@@ -78,13 +78,19 @@ def main():
 
             elif choice == "6":
                 id_input = input(
-                    "Enter lead ID (number) or Trello card ID to sync (task -> lead): "
+                    "Enter lead ID or Trello card ID to sync (task -> lead): "
                 ).strip()
                 if not id_input:
                     print("ID cannot be empty.")
                 else:
-                    # If numeric, treat as lead ID and resolve card_id via trello_card_id
-                    if id_input.isdigit():
+                    # Check if it looks like a Trello card ID
+                    if len(id_input) == 24 and all(c in '0123456789abcdef' for c in id_input.lower()):
+                        # Looks like Trello card ID
+                        card_id = id_input
+                        logger.info(f"User selected: Sync card {card_id} -> lead")
+                        sync.sync_task_to_lead(card_id)
+                    else:
+                        # Treat as lead ID
                         lead_id = id_input
                         lead = sync.lead_client.get_lead_by_id(lead_id)
                         if not lead or not lead.get("trello_card_id"):
@@ -96,10 +102,6 @@ def main():
                                 f"Found lead {lead_id} linked to card {card_id} (task -> lead)"
                             )
                             sync.sync_task_to_lead(card_id)
-                    else:
-                        card_id = id_input
-                        logger.info(f"User selected: Sync card {card_id} -> lead")
-                        sync.sync_task_to_lead(card_id)
 
             else:
                 print("Invalid choice. Please enter a valid option (1-6 or Q).")
