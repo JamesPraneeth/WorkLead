@@ -9,21 +9,16 @@ from clients.work_tracker import WorkTrackerClient
 logger = logging.getLogger(__name__)
 
 class SyncEngine:
-    """Two-way sync orchestrator
-    
-    Maintains idempotency via a mapping file that tracks:
-    - lead_id -> card_id mappings
-    - Last sync timestamp
-    """
-    
+    #Two-way sync orchestrator
+
     def __init__(self):
         self.lead_client = LeadTrackerClient()
         self.work_client = WorkTrackerClient()
         self.mapping_file = os.getenv("MAPPING_FILE", "data/mapping.json")
         self.mapping = self._load_mapping()
     
-    def _load_mapping(self) -> Dict:
-        """Load mapping file or create new one"""
+    def _load_mapping(self):
+        # Load mapping file or create new one
         if os.path.exists(self.mapping_file):
             try:
                 with open(self.mapping_file, "r") as f:
@@ -41,7 +36,7 @@ class SyncEngine:
         }
     
     def _save_mapping(self):
-        """Persist mapping file"""
+        #Persist mapping file
         try:
             os.makedirs(os.path.dirname(self.mapping_file), exist_ok=True)
             
@@ -58,7 +53,7 @@ class SyncEngine:
             raise
     
     def initial_sync(self):
-        """One-time sync: create cards for all leads (idempotent)."""
+        #One-time sync: create cards for all leads (idempotent).
         logger.info("=" * 50)
         logger.info("STARTING INITIAL SYNC (Leads -> Cards)")
         logger.info("=" * 50)
@@ -112,8 +107,8 @@ class SyncEngine:
             logger.error(f"Initial sync failed: {str(e)}")
             raise
     
-    def sync_lead_to_task(self, lead_id: str) -> bool:
-        """Sync a specific lead's status to its task."""
+    def sync_lead_to_task(self, lead_id):
+        #Sync a specific lead's status to its task.
         logger.info(f"Syncing lead {lead_id} -> task")
         
         try:
@@ -150,7 +145,7 @@ class SyncEngine:
             return False
     
     def sync_task_to_lead(self, card_id: str) -> bool:
-        """Sync a specific task's status back to its lead."""
+        # Sync a specific task's status back to its lead.
         logger.info(f"Syncing task {card_id} -> lead")
         
         try:
@@ -175,7 +170,7 @@ class SyncEngine:
             return False
     
     def sync_all_leads_to_tasks(self):
-        """Sync ALL leads -> their tasks (bulk operation)."""
+        # Sync ALL leads -> their tasks (bulk operation).
         logger.info("Running bulk leads -> tasks status sync...")
         
         leads = self.lead_client.get_all_leads()
@@ -189,7 +184,7 @@ class SyncEngine:
         logger.info(f"Completed leads -> tasks sync: {success_count}/{len(leads)} successful")
     
     def sync_all_tasks_to_leads(self):
-        """Sync ALL tasks -> their leads (bulk operation)."""
+        #Sync ALL tasks -> their leads (bulk operation).
         logger.info("Running bulk tasks -> leads status sync...")
         
         cards = self.work_client.get_all_cards()
@@ -203,7 +198,7 @@ class SyncEngine:
         logger.info(f"Completed tasks -> leads sync: {success_count}/{len(cards)} successful")
     
     def full_sync(self):
-        """Complete bidirectional sync (idempotent)."""
+        #Complete bidirectional sync (idempotent).
         logger.info("Starting full bidirectional sync...")
         
         try:

@@ -10,7 +10,7 @@ if sys.platform.startswith('win'):
     sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding='utf-8', errors='replace')
 
 def setup_logger(name: str = "work_lead_sync"):
-    """Configure logging with file and console handlers"""
+    #Configure logging with file and console handlers
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
     
