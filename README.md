@@ -334,26 +334,6 @@ Q. Quit
 AI helped with **syntax and boilerplate**, but **design decisions, architecture, and core logic** were written by me after understanding requirements and edge cases.
 ---
 
-## Video
-
-A short (≤ 10 minutes) explanation and demo video is provided here:
-
-- **Video:** `<INSERT YOUR GOOGLE DRIVE LINK HERE>`
-
-The video covers:
-
-- Tools chosen and high-level architecture.
-- Code walkthrough:
-  - API clients.
-  - Mapping and sync engine.
-  - Error handling and idempotency.
-- Setup steps (`.env`, credentials, board/sheet configuration).
-- Demo:
-  - Creating/updating a lead and showing the Trello card update.
-  - Moving a Trello card and showing the lead status update.
-
----
-
 
 ## Project Structure
 
