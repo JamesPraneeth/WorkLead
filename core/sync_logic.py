@@ -101,7 +101,7 @@ class SyncEngine:
             logger.error(f"Initial sync failed: {e}")
             raise
 
-    def sync_lead_to_task(self, lead_id: str) -> bool:
+    def sync_lead_to_task(self, lead_id):
         # Sync a single lead's status to its Trello card, or archive card if lead vanished
         logger.info(f"Syncing lead {lead_id} -> task")
         try:
@@ -145,7 +145,7 @@ class SyncEngine:
             logger.error(f"Error syncing lead {lead_id}: {e}")
             return False
 
-    def sync_task_to_lead(self, card_id: str) -> bool:
+    def sync_task_to_lead(self, card_id):
         # Sync a single card's status to its lead, or delete lead if card vanished
         logger.info(f"Syncing task {card_id} -> lead")
         try:
